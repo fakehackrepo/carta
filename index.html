@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Página de Amor</title>
+    <style>
+        body {
+            background-color: #ff4d4d; /* Color rojo amor */
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            color: white;
+            text-align: center;
+            overflow: hidden;
+            transition: all 1s ease-out; /* Transición global de la página */
+        }
+
+        .contenido {
+            position: relative;
+        }
+
+        .contenido h1 {
+            font-size: 3rem;
+            margin-bottom: 20px;
+        }
+
+        .boton {
+            padding: 15px 30px;
+            font-size: 1.5rem;
+            color: white;
+            background-color: #ff4d4d; /* Mismo color de amor */
+            border: 2px solid white;
+            border-radius: 30px;
+            cursor: pointer;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: all 0.3s ease-in-out;
+            box-shadow: 0 0 5px 2px #ff4d4d;
+        }
+
+        .boton:hover {
+            background-color: transparent;
+            color: #ff4d4d;
+            box-shadow: 0 0 20px 5px #ff4d4d;
+        }
+
+        .neon {
+            animation: neonGlow 1.5s ease-in-out infinite alternate;
+        }
+
+        @keyframes neonGlow {
+            0% {
+                text-shadow: 0 0 5px #ff4d4d, 0 0 10px #ff4d4d, 0 0 15px #ff4d4d, 0 0 20px #ff4d4d;
+            }
+            50% {
+                text-shadow: 0 0 10px #ff4d4d, 0 0 20px #ff4d4d, 0 0 30px #ff4d4d, 0 0 40px #ff4d4d;
+            }
+            100% {
+                text-shadow: 0 0 5px #ff4d4d, 0 0 10px #ff4d4d, 0 0 15px #ff4d4d, 0 0 20px #ff4d4d;
+            }
+        }
+
+        /* Animación de ruptura */
+        .broken {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            display: flex;
+            flex-wrap: wrap;
+            pointer-events: none;
+            overflow: hidden;
+        }
+
+        .broken div {
+            position: absolute;
+            background-color: #ff4d4d;
+            opacity: 0;
+            transform: scale(1) rotate(0deg);
+            animation: breakEffect 1s forwards ease-out;
+        }
+
+        @keyframes breakEffect {
+            0% {
+                opacity: 0;
+                transform: scale(0) rotate(0deg);
+            }
+            100% {
+                opacity: 1;
+                transform: scale(3) rotate(360deg);
+            }
+        }
+
+    </style>
+</head>
+<body>
+    <div class="contenido">
+        <h1 class="neon">PRESIONA AQUÍ</h1>
+        
+        <!-- Botón con redirección -->
+        <button class="boton" onclick="breakPage();">¡Haz clic aquí!</button>
+        
+        <!-- Elementos para la animación de ruptura -->
+        <div class="broken" id="breakEffect"></div>
+    </div>
+
+    <script>
+        function breakPage() {
+            // Generar "fragmentos" de la página para la animación
+            const breakEffect = document.getElementById('breakEffect');
+            const numFragments = 30;  // Puedes ajustar la cantidad de fragmentos
+            let fragments = [];
+
+            // Crear los fragmentos
+            for (let i = 0; i < numFragments; i++) {
+                let fragment = document.createElement('div');
+                fragment.style.width = `${Math.random() * 100 + 50}px`;
+                fragment.style.height = `${Math.random() * 100 + 50}px`;
+                fragment.style.top = `${Math.random() * window.innerHeight}px`;
+                fragment.style.left = `${Math.random() * window.innerWidth}px`;
+                breakEffect.appendChild(fragment);
+                fragments.push(fragment);
+            }
+
+            // Activar la animación de ruptura
+            setTimeout(() => {
+                fragments.forEach(fragment => {
+                    fragment.style.animation = 'breakEffect 1s forwards ease-out';
+                });
+            }, 10);
+
+            // Desvanecer la página antes de redirigir
+            setTimeout(() => {
+                document.body.style.transition = 'all 1s ease-out';
+                document.body.style.opacity = '0';
+            }, 200);  // Delay para que la animación se inicie
+
+            // Redirigir después de la animación
+            setTimeout(() => {
+                window.location.href = 'carta.html'; // Redirige a la siguiente página
+            }, 1200); // Espera 1.2 segundos para que la animación termine
+        }
+    </script>
+</body>
+</html>
